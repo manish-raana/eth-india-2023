@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAddress } from '@thirdweb-dev/react';
 
 const Profile = () => {
+  const address = useAddress();
+  const [_address, setAddress] = useState<string>(address || '');
+
   return (
     <div className="md:flex items-start p-5 justify-between">
       <div className="text-start my-2 md:my-0">
@@ -9,6 +13,18 @@ const Profile = () => {
       </div>
       <div className="md:w-2/3">
         <div className="bg-white p-5 card flex flex-col items-start justify-start w-full">
+          <div className="w-full">
+            <label className="label" htmlFor="">
+              Wallet Address
+            </label>
+            <input
+              className="input bg-gray-100 w-full"
+              type="text"
+              value={_address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="0x20BE726807E2....."
+            />
+          </div>
           <div className="w-full">
             <label className="label" htmlFor="">
               Name
