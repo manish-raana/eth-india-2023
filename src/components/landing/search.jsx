@@ -1,0 +1,133 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import './gradienttext.css'
+
+const Search = () => {
+  const dataArray = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    // Add more items as needed
+  ];
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const filteredData = dataArray.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+
+  const wordVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+  };
+
+
+  const gradVariants = {
+    // Define your animation variants here
+    initial: {
+      rotate: 0, // Initial rotation angle
+      transition: {
+        duration: 1, // Duration of the animation in seconds
+        ease: 'linear', // Linear easing for smooth rotation
+      },
+    },
+    animate: {
+      rotate: 360, // Final rotation angle
+      transition: {
+        duration: 1, // Duration of the animation in seconds
+        ease: 'linear', // Linear easing for smooth rotation
+        loop: Infinity, // Repeat the animation indefinitely
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      className='min-h-screen flex flex-col items-center justify-center relative bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-pink-200 via-fuchsia-600 to-orange-600'
+    >
+
+<motion.h1
+        variants={wordVariants}
+        className='text-9xl text-white font-bold mb-6 text-center'
+      >
+        <motion.span variants={wordVariants}>Check out</motion.span>{' '}
+        <motion.span variants={wordVariants}>Our,</motion.span> <br />{' '}
+        <motion.span variants={wordVariants}>Users </motion.span> {' '}
+        <motion.span variants={gradVariants} className="animated-text" initial="initial" animate="animate">DOTTTs</motion.span>
+      </motion.h1>
+
+
+
+      <div className='bg-white  max-w-screen-xl bg-opacity-30 p-8 rounded-lg shadow-lg  mx-auto w-full'>
+        {/* Search Bar */}
+
+        <form class="flex items-center">   
+        <label for="voice-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+            </div>
+            <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search up DOTTTs" required />
+            <button type="button" class="flex absolute inset-y-0 right-0 items-center pr-3">
+                
+            </button>
+        </div>
+        <button type="submit" class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-gradient-to-r from-pink-200 via-fuchsia-600 to-orange-600 rounded-lg border focus:ring-4 focus:outline-none">
+  <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+  </svg>
+  Search
+</button>
+
+    </form>
+
+        {/* Table Component */}
+        {filteredData.length > 0 ? (
+          <table className='w-full'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData.map(item => (
+                <tr key={item.id}>
+                  <td className='text-center'>{item.id}</td>
+                  <td >{item.name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No matching items found.</p>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+export default Search;
+
+
+
+
+const Social = (name, avatar) => {
+return (
+
+
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex justify-end px-4 pt-4">
+    </div>
+    <div class="flex flex-col items-center pb-10">
+        <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/>
+        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Bonnie Green</h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Visual Designer</span>
+        <div class="flex mt-4 md:mt-6">
+            <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add friend</a>
+            <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3">Message</a>
+        </div>
+    </div>
+</div>
+
+)
+}
