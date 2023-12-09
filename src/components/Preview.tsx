@@ -33,9 +33,17 @@ type ISocialLinkProps = {
   url: string;
   iconUrl: string;
 };
+const normalizeLink = (inputLink: string) => {
+  if (!/^https?:\/\//i.test(inputLink) && !/^www\./i.test(inputLink)) {
+    inputLink = 'http://www.' + inputLink;
+  } else if (!/^https?:\/\//i.test(inputLink)) {
+    inputLink = 'http://' + inputLink;
+  }
+  return inputLink;
+};
 const SocialLink = ({ url, iconUrl }: ISocialLinkProps) => {
   return (
-    <a href={url} target="_blank">
+    <a href={normalizeLink(url)} target="_blank" rel="noopener noreferrer">
       <SocialIcon iconUrl={iconUrl} />
     </a>
   );
@@ -47,9 +55,10 @@ type ISocialListProps = {
   icon: string;
 };
 const SocialLinkList = ({ name, url, icon }: ISocialListProps) => {
+  
   return (
     <a
-      href={url}
+      href={normalizeLink(url)}
       target="_blank"
       className={`bg-gray-100 hover:bg-gray-200 w-full flex items-center gap-4 p-2 rounded-md ${
         name && url ? 'block' : 'hidden'
