@@ -1,7 +1,7 @@
 import React from 'react';
 
 const NftList = ({ nftList }: any) => {
-  console.log('nftList: ', nftList);
+  
   return (
     <div className="carousel carousel-center max-w-md p-4 space-x-4 rounded-box">
       {nftList?.map((nft: any, index: number) => (

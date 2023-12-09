@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/layout/Layout';
 import { ThirdwebProvider } from '@thirdweb-dev/react';
 import { ScrollSepoliaTestnet } from '@thirdweb-dev/chains';
@@ -14,6 +15,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <BrowserRouter>
+    <ToastContainer limit={2} />
     <ThirdwebProvider
       activeChain={ScrollSepoliaTestnet}
       supportedChains={[ScrollSepoliaTestnet]}

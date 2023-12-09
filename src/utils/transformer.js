@@ -4,4 +4,6 @@ export const encodeData = (obj) => {
   return encode(JSON.stringify(obj));
 };
 
-export const decodeData = (base64) => JSON.parse(decode(base64));
+export const decodeData = (base64) => { 
+  return JSON.parse(decode(base64));
+};

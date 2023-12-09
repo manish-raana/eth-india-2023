@@ -65,8 +65,9 @@ type PreviewProps = {
   profile: IProfile;
   socialLinks: ISocialLinks;
   externalLinks: IExternalLinks[];
+  isUserPreview?: boolean;
 };
-const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
+const Preview = ({ profile, socialLinks, externalLinks, isUserPreview = true }: PreviewProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [ens, setENS] = useState('');
   const [poapList, setPoapList] = useState([]);
@@ -76,7 +77,7 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
         input: {
           filter: {
             owner: {
-              _in: "${profile.walletAddress}"
+              _in: "${profile?.walletAddress}"
      
             }
           }
@@ -97,13 +98,13 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
 
   useMemo(() => {
     if (!loading && data && data.Domains) {
-      console.log(data);
+      //console.log(data);
       const ethNames = data?.Domains?.Domain?.filter((item: Domain) =>
         item.name.includes('.eth')
       ).map((item: Domain) => item.name);
       // Log or use the filtered array of names as needed
       if (ethNames && ethNames.length > 0) {
-        console.log(ethNames[0]);
+        //console.log(ethNames[0]);
         setENS(ethNames[0]);
       }
       // Log or use the filtered array as needed
@@ -332,11 +333,11 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
     return data;
   };
 
-  const poapdata = GetPoap(profile.walletAddress);
-  const nftdata = GetNFT(profile.walletAddress);
+  const poapdata = GetPoap(profile?.walletAddress);
+  const nftdata = GetNFT(profile?.walletAddress);
 
   useMemo(() => {
-    console.log('poapdata: ', poapdata);
+    //console.log('poapdata: ', poapdata);
     if (poapdata && poapdata?.Poaps?.Poap) {
       const _poapList = poapdata?.Poaps?.Poap;
       setPoapList(_poapList);
@@ -344,7 +345,7 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
     }
   }, [poapdata]);
   useMemo(() => {
-    console.log('nftdata: ', nftdata);
+    //console.log('nftdata: ', nftdata);
     if (nftdata) {
       const baseNft: [] = nftdata?.base?.TokenBalance || [];
       const polygonNft: [] = nftdata?.polygon?.TokenBalance || [];
@@ -360,29 +361,40 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
 
   return (
     <div className="no-scrollbar">
-      <div className="no-scrollbar h-[729px] w-[380px] overflow-y-auto rounded-[3rem] ring-8 ring-slate-800 overflow-hidden">
+      <div
+        className={`no-scrollbar overflow-y-auto rounded-[3rem] overflow-hidden ${
+          isUserPreview
+            ? 'ring-8 ring-slate-800 w-[380px] h-[729px]'
+            : 'w-[900px]'
+        }`}
+      >
         <div className="px-2 pb-4 bg-white h-full w-full space-y-8 pt-12 max-w-lg mx-auto">
           <div className="text-center">
-            <div className="h-20 w-20 rounded-full overflow-hidden ring ring-slate-200 mx-auto">
-              <img
-                src={
-                  profile.photoUrl ||
-                  'https://i.insider.com/56743fad72f2c12a008b6cc0'
-                }
-                alt="name"
-                className="h-full w-full object-cover"
-              />
-            </div>
+            {profile?.photoUrl ? (
+              <div className="h-20 w-20 rounded-full overflow-hidden ring ring-slate-200 mx-auto">
+                <img
+                  src={profile?.photoUrl}
+                  alt="name"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="h-20 w-20 rounded-full overflow-hidden ring ring-slate-200 mx-auto">
+                <div className="skeleton w-32 h-32"></div>
+              </div>
+            )}
+
             <h1 className="text-2xl font-bold mt-4 text-slate-800">
-              {profile.name || 'Den'}
+              {profile?.name || 'Den'}
             </h1>
 
-            <p className="text-sm mt-2 text-slate-600">
-              {profile.about || 'Innovating in web3'}
+            <p className={`text-sm mt-2 text-slate-600`}>
+              {profile?.about || 'Innovating in web3'}
             </p>
 
             <p className="text-sm mt-2 text-slate-600 flex gap-2 justify-center items-center">
-              {(profile.walletAddress && formatAddr(profile.walletAddress)) || (
+              {(profile?.walletAddress &&
+                formatAddr(profile?.walletAddress)) || (
                 <p className="text-gray-400">0x20BE726807E2.....</p>
               )}
 
@@ -398,49 +410,49 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
           </div>
           <div className="flex gap-3.5 items-center justify-center flex-wrap">
             <SocialLink
-              url={socialLinks.facebook}
+              url={socialLinks?.facebook}
               iconUrl="ph:facebook-logo-duotone"
             />
             <SocialLink
-              url={socialLinks.twitter}
+              url={socialLinks?.twitter}
               iconUrl="ph:twitter-logo-duotone"
             />
             <SocialLink
-              url={socialLinks.instagram}
+              url={socialLinks?.instagram}
               iconUrl="ph:instagram-logo-duotone"
             />
             <SocialLink
-              url={socialLinks.github}
+              url={socialLinks?.github}
               iconUrl="ph:github-logo-duotone"
             />
             <SocialLink
-              url={socialLinks.telegram}
+              url={socialLinks?.telegram}
               iconUrl="ph:telegram-logo-duotone"
             />
             <SocialLink
-              url={'' + socialLinks.linkedIn}
+              url={'' + socialLinks?.linkedIn}
               iconUrl="ph:linkedin-logo-duotone"
             />
             <SocialLink
-              url={'mailto:' + socialLinks.email}
+              url={'mailto:' + socialLinks?.email}
               iconUrl="ph:envelope-duotone"
             />
             <SocialLink
-              url={socialLinks.youtube}
+              url={socialLinks?.youtube}
               iconUrl="ph:youtube-logo-duotone"
             />
             <SocialLink
-              url={'https://wa.me/' + socialLinks.whatsapp}
+              url={'https://wa.me/' + socialLinks?.whatsapp}
               iconUrl="ph:whatsapp-logo-duotone"
             />
           </div>
           <div className="flex flex-col gap-3 w-full">
-            {externalLinks.map((link: IExternalLinks) => (
+            {externalLinks?.map((link: IExternalLinks) => (
               <SocialLinkList
-                key={link.id}
-                name={link.label}
-                url={link.url}
-                icon={link.iconKey}
+                key={link?.id}
+                name={link?.label}
+                url={link?.url}
+                icon={link?.iconKey}
               />
             ))}
           </div>
