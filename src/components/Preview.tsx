@@ -61,6 +61,9 @@ const Preview = () => {
             <h1 className="text-2xl font-bold mt-4 text-slate-800">
               Saurav Tomar
             </h1>
+            <h1 className="text-lg font-bold mt-4 text-slate-00">
+              Saurav Tomar
+            </h1>
             <p className="text-sm mt-2 text-slate-600">Building web3 CRM</p>
           </div>
           <div className="flex gap-3 items-center justify-center flex-wrap">
