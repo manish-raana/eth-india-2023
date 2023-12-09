@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className='mx-auto  gap-8 text-gray-300 w-full'>
 
-<footer class="p-4 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-pink-200 via-fuchsia-600 to-orange-600 sm:p-6 dark:bg-gray-800">
+<footer class="p-4 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-pink-200 via-fuchsia-600 to-orange-600 sm:p-6 dark:bg-gray-800">
     <div class="mx-auto ">
         <div class="md:flex md:justify-between">
             <div class=" flex flex-row">
