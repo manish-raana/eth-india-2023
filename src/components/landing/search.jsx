@@ -83,9 +83,9 @@ const Search = () => {
         variants={wordVariants}
         className="text-9xl text-white font-bold mb-6 text-center"
       >
-        <motion.span variants={wordVariants}>Check out</motion.span>{' '}
-        <motion.span variants={wordVariants}>Our,</motion.span> <br />{' '}
-        <motion.span variants={wordVariants}>Users </motion.span>{' '}
+        <motion.span variants={wordVariants}>Web3</motion.span>{' '}
+        <motion.span variants={wordVariants}>Social,</motion.span> <br />{' '}
+        <motion.span variants={wordVariants}>Graph </motion.span>{' '}
         <motion.span
           variants={gradVariants}
           className="animated-text"
