@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Icon } from '@iconify/react';
 import { ISocialLinks } from '../types/Social';
 
@@ -19,7 +19,7 @@ const SocialIcon = ({ iconUrl, isHoverScale = true }: ISocialIconProps) => {
 
 type Props = {
   socialLinks: ISocialLinks;
-  setSocialLinks:any;
+  setSocialLinks: any;
 };
 const Socials = ({ socialLinks, setSocialLinks }: Props) => {
   return (
@@ -261,4 +261,4 @@ const Socials = ({ socialLinks, setSocialLinks }: Props) => {
   );
 };
 
-export default Socials
+export default Socials;
