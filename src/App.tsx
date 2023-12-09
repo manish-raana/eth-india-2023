@@ -46,26 +46,7 @@ const All = () => {
   const [profile, setProfile] = useState<IProfile>(initialProfile);
   const [socialLinks, setSocialLinks] =
     useState<ISocialLinks>(initialSocialLinks);
-  const initialLinks: IExternalLinks[] = [
-    {
-      id: 1,
-      label: 'My Website',
-      iconKey: 'ph:globe-duotone',
-      url: 'www.abc.com',
-    },
-    {
-      id: 2,
-      label: 'Amazon',
-      iconKey: 'mdi:amazon',
-      url: 'www.amazon.com',
-    },
-    {
-      id: 3,
-      label: 'React Js Course',
-      iconKey: 'grommet-icons:reactjs',
-      url: 'www.reactjs.com',
-    },
-  ];
+  const initialLinks: IExternalLinks[] = [];
   const [links, setLinks] = useState(initialLinks);
   const handlePublish = () => {
     const data = {
@@ -108,7 +89,7 @@ const All = () => {
   };
   const handleDemoLoad = () => {
     const demoProfile = {
-      walletAddress: '0x74B428c4871aD222c62cF85Fe077960b8C73E043',
+      walletAddress: '0x16a9F795fA63B38F09a2373793199c16Ef019C38',
       name: 'Saurav Tomar',
       about: 'Building web3 CRM',
       photoUrl: 'https://i.insider.com/56743fad72f2c12a008b6cc0',
