@@ -50,7 +50,8 @@ const [isLoading, setIsLoading] = useState(false);
   useMemo(() => {
     if (!loading && data && data?.Socials && data?.Socials?.Social) {
       console.log('resolved-data: ', data?.Socials?.Social);
-      const addr = data?.Socials?.Social[0]?.userAddress;
+      const socials = data?.Socials?.Social;
+      const addr = socials.length > 1 ? socials[1]?.userAddress : socials[0]?.userAddress;
       if (addr) { 
         setUserData((prevData:any) => { 
         return {
