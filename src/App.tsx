@@ -16,6 +16,7 @@ import { DotContactAddress, DotContractAbi } from './abi/dottt';
 import { SuccessAlert } from './utils/alerts';
 import { ethers } from 'ethers';
 import ProfileView from './ProfileView';
+import Explorer from './components/landing/explorer';
 // Create a Main component
 
 const All = () => {
@@ -216,6 +217,12 @@ function App() {
         }
       />
       <Route path="/:id" element={<ProfileView />} />
+      <Route
+        path="/explore"
+        element={
+          <Explorer />
+        }
+      />
     </Routes>
   );
 }
