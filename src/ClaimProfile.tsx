@@ -49,7 +49,7 @@ const [isLoading, setIsLoading] = useState(false);
 
   useMemo(() => {
     if (!loading && data && data?.Socials && data?.Socials?.Social) {
-      console.log('resolved-data: ', data?.Socials?.Social[0]);
+      console.log('resolved-data: ', data?.Socials?.Social);
       const addr = data?.Socials?.Social[0]?.userAddress;
       if (addr) { 
         setUserData((prevData:any) => { 
@@ -79,7 +79,7 @@ const [isLoading, setIsLoading] = useState(false);
         console.error('Error fetching data:', error.message);
         return null;
       }
-      console.log('data: ', data);
+      console.log('sup-data: ', data);
 
       setUserData((prevData: any) => {
         return {
@@ -87,6 +87,12 @@ const [isLoading, setIsLoading] = useState(false);
           ['socialLinks']: {
             ...prevData?.socialLinks,
             ['twitter']: 'https://twitter.com/' + data[0]?.handle,
+          },
+          ['profile']: {
+            ...prevData?.profile,
+            ['photoUrl']: data[0]?.avatar,
+            ['about']: data[0]?.bio,
+            ['name']: data[0]?.name,
           },
         };
       });
