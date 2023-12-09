@@ -46,26 +46,7 @@ const All = () => {
   const [profile, setProfile] = useState<IProfile>(initialProfile);
   const [socialLinks, setSocialLinks] =
     useState<ISocialLinks>(initialSocialLinks);
-  const initialLinks: IExternalLinks[] = [
-    {
-      id: 1,
-      label: 'My Website',
-      iconKey: 'ph:globe-duotone',
-      url: 'www.abc.com',
-    },
-    {
-      id: 2,
-      label: 'Amazon',
-      iconKey: 'mdi:amazon',
-      url: 'www.amazon.com',
-    },
-    {
-      id: 3,
-      label: 'React Js Course',
-      iconKey: 'grommet-icons:reactjs',
-      url: 'www.reactjs.com',
-    },
-  ];
+  const initialLinks: IExternalLinks[] = [];
   const [links, setLinks] = useState(initialLinks);
   const handlePublish = () => {
     const data = {
@@ -106,7 +87,60 @@ const All = () => {
       setIsLoader(false);
     }
   };
-
+  const handleDemoLoad = () => {
+    const demoProfile = {
+      walletAddress: '0x16a9F795fA63B38F09a2373793199c16Ef019C38',
+      name: 'Saurav Tomar',
+      about: 'Building web3 CRM',
+      photoUrl: 'https://i.insider.com/56743fad72f2c12a008b6cc0',
+    };
+    setProfile(demoProfile)
+    const demoSocialLinks = {
+      facebook: 'https://www.facebook.com/john_snow',
+      twitter: 'https://twitter.com/aimlbigdata',
+      instagram: 'https://www.instagram.com/s',
+      email: 'founders@xagi.in',
+      github: 'https://github.com/sauravtom',
+      telegram: 'https://t.me/stomatrix',
+      whatsapp: '+918888888888',
+      youtube: 'https://youtube.com/@john_snow',
+      linkedIn: 'https://www.linkedin.com/in/saurav-tomar-863796238/',
+    };
+    setSocialLinks(demoSocialLinks)
+    const demoExternalLinks = [
+      {
+        id: 1,
+        label: 'My Website',
+        iconKey: 'ph:globe-duotone',
+        url: 'https://xagi.in',
+      },
+      {
+        id: 2,
+        label: 'Amazon wishlist',
+        iconKey: 'ant-design:amazon-outlined',
+        url: 'https://amazon.in',
+      },
+      {
+        id: 3,
+        label: 'React JS course',
+        iconKey: 'grommet-icons:reactjs',
+        url: 'https://reactjs.org/',
+      },
+      {
+        id: 4,
+        label: 'Donate for our cause',
+        iconKey: 'iconoir:donate',
+        url: 'https://who.int',
+      },
+      {
+        id: 5,
+        label: 'Download my resume',
+        iconKey: 'ph:file-pdf',
+        url: 'https://google.com',
+      },
+    ];
+    setLinks(demoExternalLinks)
+  };
   return (
     <div className="App w-full md:flex bg-gray-100">
       <div className="relative md:w-full md:h-[88vh] py-10 overflow-y-scroll">
@@ -123,11 +157,18 @@ const All = () => {
         />
         <button
           onClick={handlePublish}
-          className="fixed left-5 hidden bottom-16 btn btn-primary md:btn-wide md:flex items-center gap-4 w-full"
+          className="fixed left-5 hidden bottom-24 btn btn-primary md:btn-wide md:flex items-center gap-4 w-full"
           disabled={isLoader}
         >
           Publish
           <Loader isLoading={isLoader} />
+        </button>
+        <button
+          onClick={handleDemoLoad}
+          className="fixed left-5 hidden bottom-8 btn bg-gray-300 md:btn-wide md:flex items-center gap-4 w-full"
+          disabled={isLoader}
+        >
+          Load Demo Data
         </button>
       </div>
       <div className="md:w-1/2 p-10 bg-white flex items-center justify-center">

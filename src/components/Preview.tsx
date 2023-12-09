@@ -409,42 +409,42 @@ const Preview = ({ profile, socialLinks, externalLinks, isUserPreview = true }: 
             </p>
           </div>
           <div className="flex gap-3.5 items-center justify-center flex-wrap">
-            <SocialLink
+           {socialLinks?.facebook && <SocialLink
               url={socialLinks?.facebook}
               iconUrl="ph:facebook-logo-duotone"
-            />
-            <SocialLink
+            />}
+            {socialLinks?.twitter && <SocialLink
               url={socialLinks?.twitter}
               iconUrl="ph:twitter-logo-duotone"
-            />
-            <SocialLink
+            />}
+            {socialLinks?.instagram && <SocialLink
               url={socialLinks?.instagram}
               iconUrl="ph:instagram-logo-duotone"
-            />
-            <SocialLink
+            />}
+            {socialLinks?.github && <SocialLink
               url={socialLinks?.github}
               iconUrl="ph:github-logo-duotone"
-            />
-            <SocialLink
+            />}
+            {socialLinks?.telegram && <SocialLink
               url={socialLinks?.telegram}
               iconUrl="ph:telegram-logo-duotone"
-            />
-            <SocialLink
-              url={'' + socialLinks?.linkedIn}
+            />}
+            {socialLinks?.linkedIn && <SocialLink
+              url={socialLinks?.linkedIn}
               iconUrl="ph:linkedin-logo-duotone"
-            />
-            <SocialLink
+            />}
+            {socialLinks?.email && <SocialLink
               url={'mailto:' + socialLinks?.email}
               iconUrl="ph:envelope-duotone"
-            />
-            <SocialLink
+            />}
+            {socialLinks?.youtube && <SocialLink
               url={socialLinks?.youtube}
               iconUrl="ph:youtube-logo-duotone"
-            />
-            <SocialLink
+            />}
+           {socialLinks?.whatsapp && <SocialLink
               url={'https://wa.me/' + socialLinks?.whatsapp}
               iconUrl="ph:whatsapp-logo-duotone"
-            />
+            />}
           </div>
           <div className="flex flex-col gap-3 w-full">
             {externalLinks?.map((link: IExternalLinks) => (
