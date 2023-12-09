@@ -97,13 +97,13 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
 
   useMemo(() => {
     if (!loading && data && data.Domains) {
-      console.log(data);
+      //console.log(data);
       const ethNames = data?.Domains?.Domain?.filter((item: Domain) =>
         item.name.includes('.eth')
       ).map((item: Domain) => item.name);
       // Log or use the filtered array of names as needed
       if (ethNames && ethNames.length > 0) {
-        console.log(ethNames[0]);
+        //console.log(ethNames[0]);
         setENS(ethNames[0]);
       }
       // Log or use the filtered array as needed
@@ -336,7 +336,7 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
   const nftdata = GetNFT(profile.walletAddress);
 
   useMemo(() => {
-    console.log('poapdata: ', poapdata);
+    //console.log('poapdata: ', poapdata);
     if (poapdata && poapdata?.Poaps?.Poap) {
       const _poapList = poapdata?.Poaps?.Poap;
       setPoapList(_poapList);
@@ -344,7 +344,7 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
     }
   }, [poapdata]);
   useMemo(() => {
-    console.log('nftdata: ', nftdata);
+    //console.log('nftdata: ', nftdata);
     if (nftdata) {
       const baseNft: [] = nftdata?.base?.TokenBalance || [];
       const polygonNft: [] = nftdata?.polygon?.TokenBalance || [];

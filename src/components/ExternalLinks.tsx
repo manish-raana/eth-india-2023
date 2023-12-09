@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { XCircleIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { IExternalLinks } from '../types/ExternalLinks';
+import Loader from './Loader';
+import { useCopyToClipboard } from 'usehooks-ts';
+import { SuccessAlert } from '../utils/alerts';
+
 
 type RowProps = {
   link: IExternalLinks;
@@ -65,8 +69,18 @@ const Row = ({ link, handleRowRemove, handleRowUpdate }: RowProps) => {
 type Props = {
   links: IExternalLinks[];
   setLinks: any;
+  handlePublish: any;
+  linkId: number;
+  isLoader: boolean;
 };
-const ExternalLinks = ({ links, setLinks }: Props) => {
+const ExternalLinks = ({
+  links,
+  setLinks,
+  handlePublish,
+  linkId,
+  isLoader,
+}: Props) => {
+  const [value, copy] = useCopyToClipboard();
   const handleRowUpdate = (updatedLink: IExternalLinks) => {
     const updatedList = links.map((link) =>
       link.id === updatedLink.id ? updatedLink : link
@@ -87,6 +101,11 @@ const ExternalLinks = ({ links, setLinks }: Props) => {
     const updatedLink = [...links, newlink];
     setLinks(updatedLink);
   };
+  const handleCopy = () => {
+    const link = window.location.origin + '/' + linkId;
+    copy(link);
+    SuccessAlert('Link Copied Successfully!');
+  }
   return (
     <>
       <div className="md:flex items-start p-5 pt-0 justify-between">
@@ -115,14 +134,40 @@ const ExternalLinks = ({ links, setLinks }: Props) => {
           ))}
         </div>
       </div>
-      <div className="flex justify-center md:justify-end px-5 w-full">
+      <div className="flex flex-col md:flex-row justify-center md:justify-center md:ml-12 gap-4 px-5 w-full ">
         <button
           onClick={handleRowAdd}
-          className="mt-8 border-2 btn btn-neutral rounded-lg block w-2/3 py-2"
+          className="btn btn-neutral"
+          disabled={isLoader}
         >
           Add More Link
         </button>
+        <button
+          onClick={handlePublish}
+          className="btn btn-primary md:btn-wide flex items-center gap-4 w-full"
+          disabled={isLoader}
+        >
+          Publish
+          <Loader isLoading={isLoader} />
+        </button>
       </div>
+
+      {linkId !== 1 && (
+        <div className="flex items-center justify-center md:justify-center px-5 mt-2 -ml-2 font-bold">
+          <p>
+            Your Link:{' '}
+            <a
+              className="hover:underline ml-3"
+              target="_blank"
+              href={`${window.location.origin}/${linkId}`}
+            >
+              {window.location.origin}/{linkId}
+            </a>
+          </p>
+
+          <DocumentDuplicateIcon className="w-6 ml-2 cursor-pointer hover:scale-125" onClick={handleCopy} />
+        </div>
+      )}
     </>
   );
 };
