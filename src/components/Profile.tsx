@@ -273,9 +273,189 @@ function Profile() {
     return data
   }
 
+  const GetNFT = () => {
+    const NFTQuery = `
+    query GetTokens($tokenType: [TokenType!], $limit: Int, $sortBy: OrderBy) {
+    
+      ethereum: TokenBalances(
+        input: {filter: {owner: {_eq: "0x4b70d04124c2996de29e0caa050a49822faec6cc"}, tokenType: {_in: $tokenType}}, blockchain: ethereum, limit: $limit, order: {lastUpdatedTimestamp: $sortBy}}
+      ) {
+        TokenBalance {
+          
+          
+  amount
+  tokenType
+  blockchain
+  tokenAddress
+  formattedAmount
+  tokenId
+  tokenAddress
+  owner {
+      addresses
+  }
+  tokenNfts {
+      tokenId
+      contentValue {
+          image {
+            medium
+          }
+      }
+      erc6551Accounts {
+        address {
+          addresses
+          tokenBalances {
+            tokenAddress
+            tokenId
+            tokenNfts {
+              contentValue {
+                image {
+                  medium
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  token {
+      isSpam
+      name
+      symbol
+      logo {
+        small
+      }
+      projectDetails {
+        imageUrl
+      }
+  }
+  
+        }
+      }
+  
+      base: TokenBalances(
+        input: {filter: {owner: {_eq: "0x4b70d04124c2996de29e0caa050a49822faec6cc"}, tokenType: {_in: $tokenType}}, blockchain: base, limit: $limit, order: {lastUpdatedTimestamp: $sortBy}}
+      ) {
+        TokenBalance {
+          
+          
+  amount
+  tokenType
+  blockchain
+  tokenAddress
+  formattedAmount
+  tokenId
+  tokenAddress
+  owner {
+      addresses
+  }
+  tokenNfts {
+      tokenId
+      contentValue {
+          image {
+            medium
+          }
+      }
+      erc6551Accounts {
+        address {
+          addresses
+          tokenBalances {
+            tokenAddress
+            tokenId
+            tokenNfts {
+              contentValue {
+                image {
+                  medium
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  token {
+      isSpam
+      name
+      symbol
+      logo {
+        small
+      }
+      projectDetails {
+        imageUrl
+      }
+  }
+  
+        }
+      }
+  
+      polygon: TokenBalances(
+        input: {filter: {owner: {_eq: "0x4b70d04124c2996de29e0caa050a49822faec6cc"}, tokenType: {_in: $tokenType}}, blockchain: polygon, limit: $limit, order: {lastUpdatedTimestamp: $sortBy}}
+      ) {
+        TokenBalance {
+          
+          
+  amount
+  tokenType
+  blockchain
+  tokenAddress
+  formattedAmount
+  tokenId
+  tokenAddress
+  owner {
+      addresses
+  }
+  tokenNfts {
+      tokenId
+      contentValue {
+          image {
+            medium
+          }
+      }
+      erc6551Accounts {
+        address {
+          addresses
+          tokenBalances {
+            tokenAddress
+            tokenId
+            tokenNfts {
+              contentValue {
+                image {
+                  medium
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  token {
+      isSpam
+      name
+      symbol
+      logo {
+        small
+      }
+      projectDetails {
+        imageUrl
+      }
+  }
+  
+        }
+      }
+    }
+    `
+
+    const nftvariables = {"limit":10,"sortBy":"DESC","tokenType":["ERC721","ERC1155"]}
+
+    const { data, loading, error } = useQuery(NFTQuery,nftvariables);
+
+    return data
+  }
+
+
   const ensdata=GetENS()
   const poapdata=GetPoap()
   const tokendata=GetTokens()
+  const nftdata = GetNFT()
   console.log(tokendata)
 
 
@@ -292,7 +472,7 @@ function Profile() {
 
       // Log or use the filtered array of names as needed
       console.log(ethNames[0]);
-      setENS(ethNames[0])
+      setENS(ensdata)
         // Log or use the filtered array as needed
       }
     }
@@ -304,14 +484,17 @@ function Profile() {
       .map((items:Event)=> items.eventName)
 
       console.log(poaps)
-      setPoaps(poaps)
+      setPoaps(poapdata)
     }
 
     if(tokendata){
       console.log(tokendata)
     }
 
-  }, [ensdata, poapdata]);
+    if(nftdata){
+      console.log(nftdata)
+    }
+  }, [_address]);
 
   return (
     <div className="md:flex items-start p-5 justify-between">
