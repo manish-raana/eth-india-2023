@@ -134,17 +134,17 @@ const ExternalLinks = ({
           ))}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-center md:justify-center md:ml-12 gap-4 px-5 w-full ">
+      <div className="flex flex-col md:flex-row justify-center md:justify-end gap-4 px-5 ">
         <button
           onClick={handleRowAdd}
-          className="btn btn-neutral"
+          className="btn btn-neutral md:w-2/3"
           disabled={isLoader}
         >
           Add More Link
         </button>
         <button
           onClick={handlePublish}
-          className="btn btn-primary md:btn-wide flex items-center gap-4 w-full"
+          className="btn btn-primary md:btn-wide flex items-center gap-4 w-full md:hidden"
           disabled={isLoader}
         >
           Publish
@@ -165,7 +165,10 @@ const ExternalLinks = ({
             </a>
           </p>
 
-          <DocumentDuplicateIcon className="w-6 ml-2 cursor-pointer hover:scale-125" onClick={handleCopy} />
+          <DocumentDuplicateIcon
+            className="w-6 ml-2 cursor-pointer hover:scale-125"
+            onClick={handleCopy}
+          />
         </div>
       )}
     </>

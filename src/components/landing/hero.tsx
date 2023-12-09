@@ -26,7 +26,7 @@ const Hero = () => {
       variants={textVariants}
       className="min-h-screen flex flex-col items-center justify-center relative bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-pink-200 via-fuchsia-600 to-orange-600"
     >
-      <div className="absolute inset-0 bg-noise"></div>
+     
       <motion.h1
         variants={wordVariants}
         className="text-9xl text-white font-bold mb-6 text-center"
