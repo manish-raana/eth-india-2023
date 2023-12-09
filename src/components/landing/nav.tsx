@@ -19,13 +19,13 @@ const Nav: React.FC = () => {
 
   return (
     <motion.div>
-      <nav className="bg-white px-8 py-2 rounded-full fixed top-4 mx-auto max-w-[600px] z-50 left-1/2 transform -translate-x-1/2">
+      <nav className="bg-white px-2 py-2 rounded-full fixed top-4 mx-auto max-w-[600px] z-50 left-1/2 transform -translate-x-1/2">
         <div className="max-w-full gap-8 mx-auto flex justify-between items-center">
           <motion.div
             variants={logoVariants} 
             initial="hidden"
             animate="visible"
-            className="flex flex-row items-center justify-center"
+            className="flex flex-row mr-12 items-center justify-center"
           >
             <img src={logo} alt="" height={40} width={40} />
             <motion.div
@@ -38,7 +38,7 @@ const Nav: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          <div className="flex  space-x-4 text-black">
+          <div className="flex font-bold space-x-4 text-black">
             <NavItem href="#home" label="Home" />
             <NavItem href="/explore" label="Explore" />
             <NavItem href="/app" label="Create your profile" />

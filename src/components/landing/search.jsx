@@ -30,7 +30,7 @@ const Search = () => {
               // Use a case-insensitive ILIKE query to search for the keyword in the 'ENS' column
               const { data: matchingENSData, error } = await supabase
                 .from('ens-twitter-data')
-                .select('avatar, ENS')
+                .select('*')
                 .ilike('ENS', `%${searchKeyword}%`);
           
               if (error) {
@@ -84,7 +84,7 @@ const Search = () => {
         className="text-9xl text-white font-bold mb-6 text-center"
       >
         <motion.span variants={wordVariants}>Web3</motion.span>{' '}
-        <motion.span variants={wordVariants}>Social,</motion.span> <br />{' '}
+        <motion.span variants={wordVariants}>Social</motion.span> <br />{' '}
         <motion.span
           variants={gradVariants}
           className="animated-text"
@@ -157,7 +157,7 @@ const Search = () => {
 
         {ensData.length > 0 ? (
           ensData.map((item) => (
-            <Social name={item.ENS} avatar={item.avatar} key={item.name} />
+            <Social name={item.ENS} avatar={item.avatar} key={item.name} handle={item.handle}/>
           ))
         ) : (
           <p>No matching items found.</p>
@@ -175,7 +175,7 @@ export default Search;
 
 
 
-const Social = ({ name, avatar }) => {
+const Social = ({ name, avatar, handle }) => {
     return (
       <div className="w-full mt-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4">
         <div className="flex items-center justify-between">
@@ -190,14 +190,17 @@ const Social = ({ name, avatar }) => {
             </h5>
           </div>
           <div className="flex">
+          <button
+  href="#"
+  className={`inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${/* Add your condition here */ true ? 'opacity-50 cursor-not-allowed' : ''}`}
+  disabled={true}
+>
+  Add friend
+</button>
+
+
             <a
-              href="#"
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Add friend
-            </a>
-            <a
-              href="#"
+              href={`http://twitter.com/${handle}`}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3"
             >
               Message

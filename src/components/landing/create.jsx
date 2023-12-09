@@ -1,4 +1,5 @@
 import React from 'react';
+import ready from '../../assets/ready.png'
 
 const Create = () => {
   return (
@@ -34,9 +35,9 @@ const Create = () => {
             </a>
            
           </div>
-          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+          <div class=" lg:mt-0 lg:col-span-5 lg:flex scale-90">
             <img
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+              src={ready}
               alt="mockup"
             />
           </div>
