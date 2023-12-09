@@ -18,6 +18,7 @@ import { ethers } from 'ethers';
 import ProfileView from './ProfileView';
 import Explorer from './components/landing/explorer';
 import Loader from './components/Loader';
+import ClaimProfile from './ClaimProfile';
 // Create a Main component
 
 const All = () => {
@@ -199,6 +200,7 @@ function App() {
         }
       />
       <Route path="/:id" element={<ProfileView />} />
+      <Route path="/p/:id" element={<ClaimProfile />} />
       <Route
         path="/explore"
         element={
