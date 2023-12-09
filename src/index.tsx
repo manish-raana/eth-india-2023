@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 
 import Layout from './components/layout/Layout';
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ThirdwebProvider } from '@thirdweb-dev/react';
 import { ScrollSepoliaTestnet } from '@thirdweb-dev/chains';
-import { BrowserRouter } from "react-router-dom"; 
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import Main from './main';
 
@@ -23,4 +23,3 @@ root.render(
     </ThirdwebProvider>
   </BrowserRouter>
 );
-

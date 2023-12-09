@@ -10,15 +10,18 @@ import Layout from './components/layout/Layout';
 import { IProfile } from './types/Profile';
 import { ISocialLinks } from './types/Social';
 import { IExternalLinks } from './types/ExternalLinks';
-
+import { init, useQuery } from '@airstack/airstack-react';
+import { useAddress } from '@thirdweb-dev/react';
 // Create a Main component
 
 const All = () => {
+  //const address = useAddress();
+  const address = '0x4b70d04124c2996de29e0caa050a49822faec6cc';
   const initialProfile: IProfile = {
-    walletAddress: '',
+    walletAddress: address || '',
     name: '',
     about: '',
-    photoUrl: ''
+    photoUrl: '',
   };
   const initialSocialLinks: ISocialLinks = {
     facebook: '',
@@ -29,7 +32,7 @@ const All = () => {
     telegram: '',
     github: '',
     email: '',
-    linkedIn:''
+    linkedIn: '',
   };
   const [profile, setProfile] = useState<IProfile>(initialProfile);
   const [socialLinks, setSocialLinks] =
@@ -55,6 +58,7 @@ const All = () => {
     },
   ];
   const [links, setLinks] = useState(initialLinks);
+
   return (
     <div className="App w-full md:flex bg-gray-100">
       <div className="md:w-full md:h-[88vh] py-10 overflow-y-scroll">
@@ -83,12 +87,14 @@ function App() {
       <Route path="/" element={<Main />} />
       {/* Route for the Main component */}
 
-      <Route path="/app" element={
-      <Layout >
-      <All />
-      </Layout>
-      } />
-
+      <Route
+        path="/app"
+        element={
+          <Layout>
+            <All />
+          </Layout>
+        }
+      />
     </Routes>
   );
 }

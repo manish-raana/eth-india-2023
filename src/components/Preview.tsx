@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { IProfile } from '../types/Profile';
 import { formatAddr } from '../utils/shortenAddress';
@@ -6,6 +6,8 @@ import { init, useQuery } from '@airstack/airstack-react';
 import Loader from './Loader';
 import { ISocialLinks } from '../types/Social';
 import { IExternalLinks } from '../types/ExternalLinks';
+import NftList from './NftList';
+import PoapList from './PoapList';
 init('158213d00525d4f0aba84af3e090fa762');
 
 type ISocialIconProps = {
@@ -32,11 +34,11 @@ type ISocialLinkProps = {
   iconUrl: string;
 };
 const SocialLink = ({ url, iconUrl }: ISocialLinkProps) => {
-    return (
-      <a href={url} target='_blank'>
-        <SocialIcon iconUrl={iconUrl} />
-      </a>
-    );
+  return (
+    <a href={url} target="_blank">
+      <SocialIcon iconUrl={iconUrl} />
+    </a>
+  );
 };
 
 type ISocialListProps = {
@@ -49,7 +51,9 @@ const SocialLinkList = ({ name, url, icon }: ISocialListProps) => {
     <a
       href={url}
       target="_blank"
-      className={`bg-gray-100 hover:bg-gray-200 w-full flex items-center gap-4 p-2 rounded-md ${name && url ? 'block' : 'hidden'}`}
+      className={`bg-gray-100 hover:bg-gray-200 w-full flex items-center gap-4 p-2 rounded-md ${
+        name && url ? 'block' : 'hidden'
+      }`}
     >
       <SocialIcon iconUrl={icon || 'ph:link-simple'} isHoverScale={false} />
       <p>{name}</p>
@@ -63,7 +67,10 @@ type PreviewProps = {
   externalLinks: IExternalLinks[];
 };
 const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [ens, setENS] = useState('');
+  const [poapList, setPoapList] = useState([]);
+  const [nftList, setNftList] = useState([]);
   const EnsQuery = `query GetENS {
       Domains(
         input: {
@@ -95,8 +102,10 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
         item.name.includes('.eth')
       ).map((item: Domain) => item.name);
       // Log or use the filtered array of names as needed
-      console.log(ethNames[0]);
-      setENS(ethNames[0]);
+      if (ethNames && ethNames.length > 0) {
+        console.log(ethNames[0]);
+        setENS(ethNames[0]);
+      }
       // Log or use the filtered array as needed
     }
   }, [data]);
@@ -105,6 +114,249 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
       setENS('');
     }
   }, [loading]);
+
+  const GetPoap = (address: string) => {
+    const PoapQuery = `
+    query GetPOAPs($limit: Int $sortBy: OrderBy) {
+      Poaps(
+        input: {filter: {owner: {_eq: "${address}"}}, blockchain: ALL, limit: $limit, order:{createdAtBlockNumber: $sortBy}}
+      ) {
+        Poap {
+          
+          id
+  blockchain
+  tokenId
+  tokenAddress
+  poapEvent {
+    city
+    eventName
+    startDate
+    eventId
+    logo: contentValue {
+      image {
+        small
+        medium
+      }
+    }
+  }
+        }
+      } 
+    }
+    `;
+
+    const variable = { limit: 10, sortBy: 'DESC' };
+
+    const { data, loading, error } = useQuery(PoapQuery, variable);
+
+    return data;
+  };
+
+  const GetNFT = (address: string) => {
+    const NFTQuery = `
+    query GetTokens($tokenType: [TokenType!], $limit: Int, $sortBy: OrderBy) {
+    
+      ethereum: TokenBalances(
+        input: {filter: {owner: {_eq: "${address}"}, tokenType: {_in: $tokenType}}, blockchain: ethereum, limit: $limit, order: {lastUpdatedTimestamp: $sortBy}}
+      ) {
+        TokenBalance {
+          
+          
+  amount
+  tokenType
+  blockchain
+  tokenAddress
+  formattedAmount
+  tokenId
+  tokenAddress
+  owner {
+      addresses
+  }
+  tokenNfts {
+      tokenId
+      contentValue {
+          image {
+            medium
+          }
+      }
+      erc6551Accounts {
+        address {
+          addresses
+          tokenBalances {
+            tokenAddress
+            tokenId
+            tokenNfts {
+              contentValue {
+                image {
+                  medium
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  token {
+      isSpam
+      name
+      symbol
+      logo {
+        small
+      }
+      projectDetails {
+        imageUrl
+      }
+  }
+  
+        }
+      }
+  
+      base: TokenBalances(
+        input: {filter: {owner: {_eq: "${address}"}, tokenType: {_in: $tokenType}}, blockchain: base, limit: $limit, order: {lastUpdatedTimestamp: $sortBy}}
+      ) {
+        TokenBalance {
+          
+          
+  amount
+  tokenType
+  blockchain
+  tokenAddress
+  formattedAmount
+  tokenId
+  tokenAddress
+  owner {
+      addresses
+  }
+  tokenNfts {
+      tokenId
+      contentValue {
+          image {
+            medium
+          }
+      }
+      erc6551Accounts {
+        address {
+          addresses
+          tokenBalances {
+            tokenAddress
+            tokenId
+            tokenNfts {
+              contentValue {
+                image {
+                  medium
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  token {
+      isSpam
+      name
+      symbol
+      logo {
+        small
+      }
+      projectDetails {
+        imageUrl
+      }
+  }
+  
+        }
+      }
+  
+      polygon: TokenBalances(
+        input: {filter: {owner: {_eq: "${address}"}, tokenType: {_in: $tokenType}}, blockchain: polygon, limit: $limit, order: {lastUpdatedTimestamp: $sortBy}}
+      ) {
+        TokenBalance {
+          
+          
+  amount
+  tokenType
+  blockchain
+  tokenAddress
+  formattedAmount
+  tokenId
+  tokenAddress
+  owner {
+      addresses
+  }
+  tokenNfts {
+      tokenId
+      contentValue {
+          image {
+            medium
+          }
+      }
+      erc6551Accounts {
+        address {
+          addresses
+          tokenBalances {
+            tokenAddress
+            tokenId
+            tokenNfts {
+              contentValue {
+                image {
+                  medium
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  token {
+      isSpam
+      name
+      symbol
+      logo {
+        small
+      }
+      projectDetails {
+        imageUrl
+      }
+  }
+  
+        }
+      }
+    }
+    `;
+
+    const nftvariables = {
+      limit: 10,
+      sortBy: 'DESC',
+      tokenType: ['ERC721', 'ERC1155'],
+    };
+
+    const { data, loading, error } = useQuery(NFTQuery, nftvariables);
+    return data;
+  };
+
+  const poapdata = GetPoap(profile.walletAddress);
+  const nftdata = GetNFT(profile.walletAddress);
+
+  useMemo(() => {
+    console.log('poapdata: ', poapdata);
+    if (poapdata && poapdata?.Poaps?.Poap) {
+      const _poapList = poapdata?.Poaps?.Poap;
+      setPoapList(_poapList);
+      setIsLoading(false);
+    }
+  }, [poapdata]);
+  useMemo(() => {
+    console.log('nftdata: ', nftdata);
+    if (nftdata) {
+      const baseNft: [] = nftdata?.base?.TokenBalance || [];
+      const polygonNft: [] = nftdata?.polygon?.TokenBalance || [];
+      const ethereumNft: [] = nftdata?.ethereum?.TokenBalance || [];
+      const _nftList = [...baseNft, ...polygonNft, ...ethereumNft];
+      const filteredNft = _nftList.filter(
+        (nft: any) => nft?.tokenNfts?.contentValue?.image?.medium
+      );
+      setNftList(filteredNft);
+      setIsLoading(false);
+    }
+  }, [nftdata]);
 
   return (
     <div className="no-scrollbar">
@@ -144,7 +396,7 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
               <Loader isLoading={loading} />
             </p>
           </div>
-          <div className="flex gap-3 items-center justify-center flex-wrap">
+          <div className="flex gap-3.5 items-center justify-center flex-wrap">
             <SocialLink
               url={socialLinks.facebook}
               iconUrl="ph:facebook-logo-duotone"
@@ -191,27 +443,21 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
                 icon={link.iconKey}
               />
             ))}
-
-            {/* <SocialLinkList
-              name="Amazon wishlist"
-              url="www.amazon.com"
-              icon="ant-design:amazon-outlined"
-            />
-            <SocialLinkList
-              name="React JS course"
-              url="www.reactjs.com"
-              icon="grommet-icons:reactjs"
-            />
-            <SocialLinkList
-              name="Donate for our cause"
-              url="https://who.int"
-              icon="iconoir:donate"
-            />
-            <SocialLinkList
-              name="Download my resume"
-              url="www.reactjs.com"
-              icon="ph:file-pdf"
-            /> */}
+          </div>
+          {nftList.length > 0 && (
+            <>
+              <p className="text-2xl text-start font-bold">NFTs</p>
+              <NftList nftList={nftList} />
+            </>
+          )}
+          {poapList.length > 0 && (
+            <>
+              <p className="text-2xl text-start font-bold">POAPs</p>
+              <PoapList poapList={poapList} />
+            </>
+          )}
+          <div className="flex items-center justify-center">
+            <Loader isLoading={isLoading} />
           </div>
         </div>
       </div>
@@ -219,4 +465,4 @@ const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
   );
 };
 
-export default Preview
+export default Preview;

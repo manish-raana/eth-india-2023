@@ -7,5 +7,5 @@ export type ISocialLinks = {
   telegram: string;
   github: string;
   email: string;
-  linkedIn:string;
+  linkedIn: string;
 };

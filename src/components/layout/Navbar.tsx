@@ -1,5 +1,5 @@
-import React from 'react'
-import { ConnectWallet } from "@thirdweb-dev/react";
+import React from 'react';
+import { ConnectWallet } from '@thirdweb-dev/react';
 
 const Navbar = () => {
   return (
@@ -15,6 +15,6 @@ const Navbar = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

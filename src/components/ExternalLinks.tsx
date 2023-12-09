@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { XCircleIcon } from '@heroicons/react/24/outline';
 import { IExternalLinks } from '../types/ExternalLinks';
-
 
 type RowProps = {
   link: IExternalLinks;
   handleRowRemove: any;
-  handleRowUpdate:any;
+  handleRowUpdate: any;
 };
 
 const Row = ({ link, handleRowRemove, handleRowUpdate }: RowProps) => {
@@ -68,12 +67,12 @@ type Props = {
   setLinks: any;
 };
 const ExternalLinks = ({ links, setLinks }: Props) => {
-   const handleRowUpdate = (updatedLink: IExternalLinks) => {
-     const updatedList = links.map((link) =>
-       link.id === updatedLink.id ? updatedLink : link
-     );
-     setLinks(updatedList);
-   };
+  const handleRowUpdate = (updatedLink: IExternalLinks) => {
+    const updatedList = links.map((link) =>
+      link.id === updatedLink.id ? updatedLink : link
+    );
+    setLinks(updatedList);
+  };
   const handleRowRemove = (item: any) => {
     const newList = links.filter((link: IExternalLinks) => link.id !== item.id);
     setLinks(newList);
@@ -128,4 +127,4 @@ const ExternalLinks = ({ links, setLinks }: Props) => {
   );
 };
 
-export default ExternalLinks
+export default ExternalLinks;
