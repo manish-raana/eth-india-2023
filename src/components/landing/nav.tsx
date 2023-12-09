@@ -34,7 +34,7 @@ const Nav: React.FC = () => {
               animate="visible"
               className="ml-2 flex items-center text-black font-semibold text-lg"
             >
-              <h2 className="text-2xl">Dot3</h2>
+              <h2 className="text-2xl">Dotttt</h2>
             </motion.div>
           </motion.div>
 

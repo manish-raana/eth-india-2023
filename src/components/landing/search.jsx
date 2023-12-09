@@ -85,14 +85,13 @@ const Search = () => {
       >
         <motion.span variants={wordVariants}>Web3</motion.span>{' '}
         <motion.span variants={wordVariants}>Social,</motion.span> <br />{' '}
-        <motion.span variants={wordVariants}>Graph </motion.span>{' '}
         <motion.span
           variants={gradVariants}
           className="animated-text"
           initial="initial"
           animate="animate"
         >
-          DOTTTs
+          Graph
         </motion.span>
       </motion.h1>
 
