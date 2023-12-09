@@ -5,6 +5,7 @@ import { formatAddr } from '../utils/shortenAddress';
 import { init, useQuery } from '@airstack/airstack-react';
 import Loader from './Loader';
 import { ISocialLinks } from '../types/Social';
+import { IExternalLinks } from '../types/ExternalLinks';
 init('158213d00525d4f0aba84af3e090fa762');
 
 type ISocialIconProps = {
@@ -48,9 +49,9 @@ const SocialLinkList = ({ name, url, icon }: ISocialListProps) => {
     <a
       href={url}
       target="_blank"
-      className="bg-gray-100 hover:bg-gray-200 w-full flex items-center gap-4 p-2 rounded-md"
+      className={`bg-gray-100 hover:bg-gray-200 w-full flex items-center gap-4 p-2 rounded-md ${name && url ? 'block' : 'hidden'}`}
     >
-      <SocialIcon iconUrl={icon} isHoverScale={false} />
+      <SocialIcon iconUrl={icon || 'ph:link-simple'} isHoverScale={false} />
       <p>{name}</p>
     </a>
   );
@@ -58,9 +59,10 @@ const SocialLinkList = ({ name, url, icon }: ISocialListProps) => {
 
 type PreviewProps = {
   profile: IProfile;
-  socialLinks:ISocialLinks;
+  socialLinks: ISocialLinks;
+  externalLinks: IExternalLinks[];
 };
-const Preview = ({ profile, socialLinks }: PreviewProps) => {
+const Preview = ({ profile, socialLinks, externalLinks }: PreviewProps) => {
   const [ens, setENS] = useState('');
   const EnsQuery = `query GetENS {
       Domains(
@@ -105,8 +107,8 @@ const Preview = ({ profile, socialLinks }: PreviewProps) => {
   }, [loading]);
 
   return (
-    <div className="">
-      <div className="h-[729px] w-[380px] overflow-y-auto rounded-[3rem] ring-8 ring-slate-800 overflow-hidden">
+    <div className="no-scrollbar">
+      <div className="no-scrollbar h-[729px] w-[380px] overflow-y-auto rounded-[3rem] ring-8 ring-slate-800 overflow-hidden">
         <div className="px-2 pb-4 bg-white h-full w-full space-y-8 pt-12 max-w-lg mx-auto">
           <div className="text-center">
             <div className="h-20 w-20 rounded-full overflow-hidden ring ring-slate-200 mx-auto">
@@ -164,24 +166,33 @@ const Preview = ({ profile, socialLinks }: PreviewProps) => {
               iconUrl="ph:telegram-logo-duotone"
             />
             <SocialLink
-              url={''+socialLinks.linkedIn}
+              url={'' + socialLinks.linkedIn}
               iconUrl="ph:linkedin-logo-duotone"
             />
-            <SocialLink url={'mailto:'+socialLinks.email} iconUrl="ph:envelope-duotone" />
+            <SocialLink
+              url={'mailto:' + socialLinks.email}
+              iconUrl="ph:envelope-duotone"
+            />
             <SocialLink
               url={socialLinks.youtube}
               iconUrl="ph:youtube-logo-duotone"
             />
-            <SocialLink url={'https://wa.me/'+socialLinks.whatsapp} iconUrl="ph:whatsapp-logo-duotone" />
-          
+            <SocialLink
+              url={'https://wa.me/' + socialLinks.whatsapp}
+              iconUrl="ph:whatsapp-logo-duotone"
+            />
           </div>
           <div className="flex flex-col gap-3 w-full">
-            <SocialLinkList
-              name="My Website"
-              url="www.facebook.com"
-              icon="ph:globe-duotone"
-            />
-            <SocialLinkList
+            {externalLinks.map((link: IExternalLinks) => (
+              <SocialLinkList
+                key={link.id}
+                name={link.label}
+                url={link.url}
+                icon={link.iconKey}
+              />
+            ))}
+
+            {/* <SocialLinkList
               name="Amazon wishlist"
               url="www.amazon.com"
               icon="ant-design:amazon-outlined"
@@ -200,7 +211,7 @@ const Preview = ({ profile, socialLinks }: PreviewProps) => {
               name="Download my resume"
               url="www.reactjs.com"
               icon="ph:file-pdf"
-            />
+            /> */}
           </div>
         </div>
       </div>
