@@ -16,6 +16,7 @@ import { DotContactAddress, DotContractAbi } from './abi/dottt';
 import { SuccessAlert } from './utils/alerts';
 import { ethers } from 'ethers';
 import ProfileView from './ProfileView';
+import Loader from './components/Loader';
 // Create a Main component
 
 const All = () => {
@@ -175,7 +176,7 @@ const All = () => {
 
   return (
     <div className="App w-full md:flex bg-gray-100">
-      <div className="md:w-full md:h-[88vh] py-10 overflow-y-scroll">
+      <div className="relative md:w-full md:h-[88vh] py-10 overflow-y-scroll">
         <Profile profile={profile} setProfile={setProfile} />
         <div className="divider"></div>
         <Socials socialLinks={socialLinks} setSocialLinks={setSocialLinks} />
@@ -187,6 +188,14 @@ const All = () => {
           linkId={linkId}
           isLoader={isLoader}
         />
+        <button
+          onClick={handlePublish}
+          className="fixed left-5 hidden bottom-16 btn btn-primary md:btn-wide md:flex items-center gap-4 w-full"
+          disabled={isLoader}
+        >
+          Publish
+          <Loader isLoading={isLoader} />
+        </button>
       </div>
       <div className="md:w-1/2 p-10 bg-white flex items-center justify-center">
         <Preview

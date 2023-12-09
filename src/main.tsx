@@ -9,9 +9,9 @@ const Main = () => {
   return (
     <div className='min-h-screen flex flex-col bg-[#f2e8cf]'>
     <Nav />
-    <Hero />
-    <Create />
     <Search />
+    {/* <Hero /> */}
+    <Create />
     <Footer />
     </div>
   );

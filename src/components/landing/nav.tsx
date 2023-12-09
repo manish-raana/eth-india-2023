@@ -22,7 +22,7 @@ const Nav: React.FC = () => {
       <nav className="bg-white px-8 py-2 rounded-full fixed top-4 mx-auto max-w-[600px] z-50 left-1/2 transform -translate-x-1/2">
         <div className="max-w-full gap-8 mx-auto flex justify-between items-center">
           <motion.div
-            variants={logoVariants}
+            variants={logoVariants} 
             initial="hidden"
             animate="visible"
             className="flex flex-row items-center justify-center"
@@ -40,8 +40,8 @@ const Nav: React.FC = () => {
 
           <div className="flex  space-x-4 text-black">
             <NavItem href="#home" label="Home" />
-            <NavItem href="#about" label="About" />
-            <NavItem href="#contact" label="Contact" />
+            <NavItem href="/explore" label="Explore" />
+            <NavItem href="/app" label="Create your profile" />
           </div>
         </div>
       </nav>
