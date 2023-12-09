@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { motion } from 'framer-motion';
 import './gradienttext.css'
 
@@ -15,13 +15,41 @@ const Explorer = () => {
 
     const [ensData, setData]=useState([])
 
-  
-        async function searchENSData() {
+        useEffect(()=>{
+
+            async function searchAll() {
+                try {
+                  // Use a case-insensitive ILIKE query to search for the keyword in the 'ENS' column
+                  const { data: matchingENSData, error } = await supabase
+                    .from('ens-twitter-data')
+                    .select('avatar, ENS')
+              
+                  if (error) {
+                    console.error('Error fetching data:', error.message);
+                    return null;
+                  }
+                  console.log(matchingENSData)
+                  setData(matchingENSData)
+                  return matchingENSData;
+                } catch (error) {
+                  console.error('Error:', error.message);
+                  return null;
+                }
+              }
+
+
+              searchAll()
+        }, [])
+
+
+
+        async function searchENSData(searchKeyword) {
             try {
               // Use a case-insensitive ILIKE query to search for the keyword in the 'ENS' column
               const { data: matchingENSData, error } = await supabase
                 .from('ens-twitter-data')
                 .select('avatar, ENS')
+                .ilike('ENS', `%${searchKeyword}%`);
           
               if (error) {
                 console.error('Error fetching data:', error.message);
@@ -47,12 +75,12 @@ const Explorer = () => {
         >
     
   
-    
+        <h1 className='text-white text-8xl font-bold mb-8'>Explore People</h1>
     
           <div className='bg-white  max-w-screen-xl bg-opacity-30 p-8 rounded-lg shadow-lg  mx-auto w-full'>
             {/* Search Bar */}
     
-            <form class="flex items-center" onSubmit={(e)=>{searchENSData(e, inp)}}>   
+            <div class="flex items-center">   
             <label for="voice-search" class="sr-only">Search</label>
             <div class="relative w-full">
                 <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -67,6 +95,7 @@ const Explorer = () => {
                 </button>
             </div>
             <button 
+            onClick={()=>searchENSData(inp)}
             class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-gradient-to-r from-pink-200 via-fuchsia-600 to-orange-600 rounded-lg border focus:ring-4 focus:outline-none">
       <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -74,7 +103,7 @@ const Explorer = () => {
       Search
     </button>
     
-        </form>
+        </div>
     
     {ensData.length > 0 ? (
       ensData.map(item => (
