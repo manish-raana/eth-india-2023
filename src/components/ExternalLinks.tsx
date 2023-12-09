@@ -152,7 +152,7 @@ const ExternalLinks = ({
         </button>
       </div>
 
-      {linkId !== 1 && (
+      {linkId !== 0 && (
         <div className="flex items-center justify-center md:justify-center px-5 mt-2 -ml-2 font-bold">
           <p>
             Your Link:{' '}

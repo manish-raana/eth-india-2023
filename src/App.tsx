@@ -15,6 +15,7 @@ import { decodeData, encodeData } from './utils/transformer';
 import { DotContactAddress, DotContractAbi } from './abi/dottt';
 import { SuccessAlert } from './utils/alerts';
 import { ethers } from 'ethers';
+import ProfileView from './ProfileView';
 // Create a Main component
 
 const All = () => {
@@ -214,6 +215,7 @@ function App() {
           </Layout>
         }
       />
+      <Route path="/:id" element={<ProfileView />} />
     </Routes>
   );
 }
