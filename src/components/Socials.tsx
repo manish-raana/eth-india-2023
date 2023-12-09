@@ -1,5 +1,6 @@
 import React from 'react'
 import { Icon } from '@iconify/react';
+import { ISocialLinks } from '../types/Social';
 
 type ISocialIconProps = {
   iconUrl: string;
@@ -16,7 +17,11 @@ const SocialIcon = ({ iconUrl, isHoverScale = true }: ISocialIconProps) => {
   );
 };
 
-const Socials = () => {
+type Props = {
+  socialLinks: ISocialLinks;
+  setSocialLinks:any;
+};
+const Socials = ({ socialLinks, setSocialLinks }: Props) => {
   return (
     <div className="md:flex items-start p-5 pt-0 justify-between">
       <div className="text-start my-2 md:my-0">
@@ -34,6 +39,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:facebook-logo" isHoverScale={false} />
               </div>
               <input
+                name="facebook"
+                value={socialLinks.facebook}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your facebook profile"
@@ -49,6 +64,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:twitter-logo" isHoverScale={false} />
               </div>
               <input
+                name="twitter"
+                value={socialLinks.twitter}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your twitter profile"
@@ -64,6 +89,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:instagram-logo" isHoverScale={false} />
               </div>
               <input
+                name="instagram"
+                value={socialLinks.instagram}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your instagram profile"
@@ -79,6 +114,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:github-logo" isHoverScale={false} />
               </div>
               <input
+                name="github"
+                value={socialLinks.github}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your github profile"
@@ -94,6 +139,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:telegram-logo" isHoverScale={false} />
               </div>
               <input
+                name="telegram"
+                value={socialLinks.telegram}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your telegram handle"
@@ -109,6 +164,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:linkedin-logo" isHoverScale={false} />
               </div>
               <input
+                name="linkedIn"
+                value={socialLinks.linkedIn}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your linkedin profile"
@@ -124,8 +189,18 @@ const Socials = () => {
                 <SocialIcon iconUrl="ic:outline-email" isHoverScale={false} />
               </div>
               <input
+                name="email"
+                value={socialLinks.email}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
-                type="text"
+                type="email"
                 placeholder="Enter your email"
               />
             </div>
@@ -139,6 +214,16 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:youtube-logo" isHoverScale={false} />
               </div>
               <input
+                name="youtube"
+                value={socialLinks.youtube}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
                 placeholder="Enter your youtube channel link"
@@ -154,9 +239,19 @@ const Socials = () => {
                 <SocialIcon iconUrl="ph:whatsapp-logo" isHoverScale={false} />
               </div>
               <input
+                name="whatsapp"
+                value={socialLinks.whatsapp}
+                onChange={(e: any) =>
+                  setSocialLinks((socialLink: ISocialLinks) => {
+                    return {
+                      ...socialLink,
+                      [e.target.name]: e.target.value,
+                    };
+                  })
+                }
                 className="input w-full bg-white focus:outline-none rounded-l-none"
                 type="text"
-                placeholder="Enter your whatsapp number"
+                placeholder="Enter your whatsapp number e.g +91800800800.."
               />
             </div>
           </div>
@@ -164,6 +259,6 @@ const Socials = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Socials

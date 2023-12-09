@@ -8,7 +8,8 @@ const ExternalLinks = () => {
         <p className="font-bold text-md">Links</p>
         <p className="text-sm">Add some links here</p>
         <p className="text-xs">
-          Icon keys can be found in https://icones.js.org/.
+          Icon keys can be found on 
+          <a className='ml-2 hover:underline' target='_blank' href="https://icones.js.org/.">https://icones.js.org/.</a>
         </p>
       </div>
       <div className="md:w-2/3">

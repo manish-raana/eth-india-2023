@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useAddress } from '@thirdweb-dev/react';
 import { init, useQuery } from '@airstack/airstack-react';
+import { IProfile } from '../types/Profile';
 
 init('158213d00525d4f0aba84af3e090fa762');
 
-function Profile() {
+type ProfileProps = {
+  profile: IProfile;
+  setProfile: any;
+};
+function Profile({profile, setProfile}:ProfileProps) {
   const address = useAddress();
   const [_address, setAddress] = useState<string>(address || '');
   const [ens, setENS]=useState('')
   const [poaps, setPoaps]=useState()
-
-  interface Domain {
-    dappName: string;
-    name: string;
-  }
 
   interface Event {
     city: string,
@@ -34,13 +34,13 @@ function Profile() {
 
 
 
-  const GetENS = () => {
+  const GetENS = (address:string) => {
     const ENS = `query GetENS {
       Domains(
         input: {
           filter: {
             owner: {
-              _in: "0x4b70d04124c2996de29e0caa050a49822faec6cc"
+              _in: "${address}"
      
             }
           }
@@ -452,7 +452,7 @@ function Profile() {
   }
 
 
-  const ensdata=GetENS()
+  
   const poapdata=GetPoap()
   const tokendata=GetTokens()
   const nftdata = GetNFT()
@@ -460,7 +460,7 @@ function Profile() {
 
 
 
-  useEffect(() => {
+  /* useEffect(() => {
 
     if(ensdata){
       if(ensdata.Domains!=null)
@@ -494,7 +494,7 @@ function Profile() {
     if(nftdata){
       console.log(nftdata)
     }
-  }, [_address]);
+  }, [_address]); */
 
   return (
     <div className="md:flex items-start p-5 justify-between">
@@ -511,9 +511,18 @@ function Profile() {
             <input
               className="input bg-gray-100 w-full"
               type="text"
-              value={_address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="0x20BE726807E2....." />
+              name="walletAddress"
+              value={profile.walletAddress}
+              onChange={(e: any) =>
+                setProfile((profile: IProfile) => {
+                  return {
+                    ...profile,
+                    [e.target.name]: e.target.value,
+                  };
+                })
+              }
+              placeholder="0x20BE726807E2....."
+            />
           </div>
           <div className="w-full">
             <label className="label" htmlFor="">
@@ -522,18 +531,36 @@ function Profile() {
             <input
               className="input bg-gray-100 w-full"
               type="text"
-              value={ens}
-              onChange={(e=>setENS(e.target.value))}
-              placeholder="Enter your name" />
+              name="name"
+              value={profile.name}
+              onChange={(e: any) =>
+                setProfile((profile: IProfile) => {
+                  return {
+                    ...profile,
+                    [e.target.name]: e.target.value,
+                  };
+                })
+              }
+              placeholder="Enter your name"
+            />
           </div>
           <div className="w-full">
             <label className="label" htmlFor="">
               About Yourself
             </label>
             <textarea
+              name="about"
               className="textarea bg-gray-100 w-full"
               placeholder="I am a web3 developer"
-              value={poaps || "Poaps"}
+              value={profile.about}
+              onChange={(e: any) =>
+                setProfile((profile: IProfile) => {
+                  return {
+                    ...profile,
+                    [e.target.name]: e.target.value,
+                  };
+                })
+              }
             ></textarea>
           </div>
           <div className="w-full">
@@ -541,9 +568,20 @@ function Profile() {
               Photo Url
             </label>
             <input
+              name="photoUrl"
               className="input bg-gray-100 w-full"
               type="text"
-              placeholder="Enter your photo Url" />
+              placeholder="Enter your photo Url"
+              value={profile.photoUrl}
+              onChange={(e: any) =>
+                setProfile((profile: IProfile) => {
+                  return {
+                    ...profile,
+                    [e.target.name]: e.target.value,
+                  };
+                })
+              }
+            />
           </div>
         </div>
       </div>
