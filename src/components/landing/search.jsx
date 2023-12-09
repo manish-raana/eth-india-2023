@@ -186,7 +186,9 @@ const Social = ({ name, avatar, handle }) => {
               alt="Bonnie image"
             />
             <h5 className="text-xl ml-4 font-medium text-gray-900 dark:text-white">
+                <a href={`/p/${name}`}>
               {name}
+              </a>
             </h5>
           </div>
           <div className="flex">
