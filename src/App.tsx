@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import Preview from './components/Preview';
 import Profile from './components/Profile';
@@ -23,9 +23,10 @@ const All = () => {
   const [linkId, setLinkId] = useState(0);
   const [isLoader, setIsLoader] = useState(false);
   const address = useAddress();
+  console.log('address: ', address);
   //const address = '0x4b70d04124c2996de29e0caa050a49822faec6cc';
   const initialProfile: IProfile = {
-    walletAddress: address || '',
+    walletAddress: '',
     name: '',
     about: '',
     photoUrl: '',
@@ -77,7 +78,9 @@ const All = () => {
     console.log('decodedData: ', decodedData); */
     storeEncodedData(encodedData);
   }
-
+  useEffect(() => {
+    setProfile({...initialProfile, walletAddress:address!});
+  },[address]);
   const sdk = useSDK();
 
   const storeEncodedData = async (encodedData: string) => {
