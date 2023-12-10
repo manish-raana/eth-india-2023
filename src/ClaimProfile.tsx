@@ -8,6 +8,8 @@ import { ISocialLinks } from './types/Social';
 import { IProfile } from './types/Profile';
 import { createClient } from '@supabase/supabase-js';
 import { init, useQuery } from '@airstack/airstack-react';
+import PreviewClaim from './components/PreviewClaim';
+import Jazzicon from 'react-jazzicon';
 
 const ClaimProfile = () => {
 init('158213d00525d4f0aba84af3e090fa762');
@@ -26,45 +28,6 @@ const [isLoading, setIsLoading] = useState(false);
   }>();
   const { id } = useParams();
   const navigate = useNavigate();
-  const sdk = useSDK();
-  const addrQuery = `query GetUserDetailsFromENS {
-            Socials(
-              input: {
-                filter: { identity: { _eq: "${id}" } }
-                blockchain: ethereum
-              }
-            ) {
-              Social {
-                userAddress
-                dappName
-                profileName
-              }
-            }
-          }`;
-  const { data, loading, error } = useQuery(addrQuery);
-  
-  if (error) {
-    console.log('error: ', error);
-  }
-
-  useMemo(() => {
-    if (!loading && data && data?.Socials && data?.Socials?.Social) {
-      console.log('resolved-data: ', data?.Socials?.Social);
-      const socials = data?.Socials?.Social;
-      const addr = socials.length > 1 ? socials[1]?.userAddress : socials[0]?.userAddress;
-      if (addr) { 
-        setUserData((prevData:any) => { 
-        return {
-          ...prevData,
-          ['profile']: {
-            ...prevData?.profile,
-            ['walletAddress']: addr,
-          },
-        };
-      })
-      }
-    }
-  }, [data]);
 
   async function searchENSData(searchKeyword: string) {
     setIsLoading(true);
@@ -87,16 +50,16 @@ const [isLoading, setIsLoading] = useState(false);
           ...prevData,
           ['socialLinks']: {
             ...prevData?.socialLinks,
-            ['twitter']: 'https://twitter.com/' + data[0]?.handle,
+            ['twitter']: data[0]?.handle ? 'https://twitter.com/' + data[0]?.handle : '',
           },
           ['profile']: {
             ...prevData?.profile,
             ['photoUrl']: data[0]?.avatar,
             ['about']: data[0]?.bio,
-            ['name']: data[0]?.name,
           },
         };
       });
+      
       return data;
     } catch (error: any) {
       console.error('Error:', error.message);
@@ -108,6 +71,16 @@ const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (id) {
       console.log('id: ', id);
+      setUserData((prevData: any) => {
+        return {
+          ...prevData,
+          ['profile']: {
+            ...prevData?.profile,
+            ['walletAddress']: id,
+            ['name']:id
+          },
+        };
+      });
       searchENSData(id);
     } else {
       navigate('/');
@@ -115,7 +88,7 @@ const [isLoading, setIsLoading] = useState(false);
   },[id])
   return (
     <div className="flex items-start justify-center w-full h-screen">
-      <Preview
+      <PreviewClaim
         externalLinks={userData?.externalLinks!}
         profile={userData?.profile!}
         socialLinks={userData?.socialLinks!}
